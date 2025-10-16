@@ -38,7 +38,16 @@ const crear = async (req, res) => {
 
   }catch(e){
     console.error(e)
+    if (e.code === "ER_DUP_ENTRY"){
+      return res.status(400).json({error:'DNI esta duplicado'})
+     }
+  res.status(500).json({error: 'Error en el proceso registrado'})
   }
+}
+const crearTest = async (req,res) =>{
+  res.status(201).json({
+    test:"correcto"
+  })
 }
 
 const actualizar = async(req,re) =>{

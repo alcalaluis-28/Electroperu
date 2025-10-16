@@ -126,53 +126,50 @@
         </div>
       </div>
     </main>
-
-    <!-- 🧠 Script de creación -->
     <script>
-      const API_URL = "http://localhost:3000/api/personas";
+      document.addEventListener("DOMContentLoaded", () => {
+        const API_URL = 'http://localhost:3000/api/personas'
+        const formulario = document.getElementById('formulario-registro')
+        const apellidos =  document.getElementById("apellido")
+        const nombres =  document.getElementById("nombres")
+        const dni =  document.getElementById("dni")
+        const telefono =  document.getElementById("telefono")
+        
 
-      document
-        .getElementById("form-persona")
-        .addEventListener("submit", async (event) => {
-          event.preventDefault(); // Evita recargar la página
-
-          // 1️⃣ Recolectar datos del formulario
-          const formData = new FormData();
-          formData.append("nombres", document.getElementById("nombres").value);
-          formData.append("apellidos", document.getElementById("apellidos").value);
-          formData.append("dni", document.getElementById("dni").value);
-          formData.append("telefono", document.getElementById("telefono").value);
-          formData.append("foto", document.getElementById("foto").files[0]);
-
-          try {
-            // 2️⃣ Enviar los datos a la API (POST)
-            const response = await fetch(API_URL, {
-              method: "POST",
-              body: formData,
-            });
-
-            if (!response.ok) throw new Error("Error al guardar los datos");
-
-            const data = await response.json();
-
-            // 3️⃣ Mostrar mensaje de éxito
-            Swal.fire({
-              icon: "success",
-              title: "Registro exitoso",
-              confirmButtonText: "OK",
-            }).then(() => {
-              // Redirigir al listado
-              window.location.href = "http://localhost:3000/personas";
-            });
-          } catch (error) {
-            console.error(error);
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "No se pudo registrar la persona. Intenta nuevamente.",
-            });
+        async function guardarDatos() {
+          const data = {
+            apellidos: apellidos.value,
+            nombres: nombres.value,
+            dni: dni.value,
+            telefono: telefono.value,
+            fotografia:"foto.jpg"
           }
-        });
+          const response = await fetch(API_URL,{
+           method: 'post',
+           headers: {"Content-Type": "application/json"},
+           body: JSON.stringify(data)
+          })
+          const result = await response.json()
+          console.log(result)         
+        }
+        formulario.addEventListener("submit",(event)=>{
+          event.preventDefault() //Cancelacion de evento
+
+          Swal.fire({
+            text: "Registro de personas",
+            title:"¿Seguro de guardar?",
+            icon: "question",
+            confirmButtonText: "Aceptar",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+
+          }).then((result) => {
+            if(result.isConfirmed){
+              guardarDatos();
+            }
+          })
+        })
+      })
     </script>
   </body>
 </html>
