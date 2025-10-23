@@ -8,8 +8,8 @@ router.get('/',personaController.obtenerTodas)
 //CREAR ->binario
 //fotografia =name(fronted)
 
-//router.post('/',upload.single('fotografia'),personaController.crear)
-router.post('/',personaController.crear)
+router.post('/',upload.single('fotografia'),personaController.crear)
+//router.post('/',personaController.crear)
 module.exports = router
 
 

@@ -1,11 +1,12 @@
 //Gestionar los archivos binarios => jpg, png, pdf, mp3
 //Node > "multer"
+//Configuracion de multer
 const multer = require("multer")
 const path = require("path")
 
 const uploadDir = "./public/uploads"
 
-//Gestion de Escritura
+//Configuracion de almacenamiento de Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => { 
     cb(null, uploadDir)
